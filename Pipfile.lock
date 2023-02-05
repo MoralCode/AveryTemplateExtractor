@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5bc5bf70a7787f5bea142aa27f6d672e7d2e02715aa6008391b2c48090d6655c"
+            "sha256": "34bcc9fd86601892f910833d641a10233c56e9bb0f4b800977b54f98196506c9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -98,6 +98,13 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
             "version": "==4.9.2"
+        },
+        "olefile": {
+            "hashes": [
+                "sha256:133b031eaf8fd2c9399b78b8bc5b8fcbe4c31e85295749bb17a87cba8f3c3964"
+            ],
+            "index": "pypi",
+            "version": "==0.46"
         },
         "python-docx": {
             "hashes": [
