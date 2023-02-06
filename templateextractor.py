@@ -15,38 +15,42 @@ document = Document(args.filename)
 output = ""
 
 def gen_output_line(name, value):
-	return str(name) + "=" + str(round(value, 3)) + "\n"
+	return str(name) + "=" + str(value) + "\n"
+
+def gen_output_data_line(name, value):
+	return gen_output_line(name, round(value, 3))
 
 vertical_tablespace=0
+
+output += gen_output_line("unit", "inches")
+
 
 sections = document.sections
 for section in sections:
 	# print(section.start_type)
 	# print(section.page_height, section.page_width)
 	# section.orientation
-	output += gen_output_line("page_height", section.page_height.inches)
-	output += gen_output_line("page_width", section.page_width.inches)
-	output += gen_output_line("left_margin", section.left_margin.inches)
-	output += gen_output_line("right_margin", section.right_margin.inches)
-	output += gen_output_line("top_margin", section.top_margin.inches)
-	output += gen_output_line("bottom_margin", section.bottom_margin.inches)
+	output += gen_output_data_line("page_height", section.page_height.inches)
+	output += gen_output_data_line("page_width", section.page_width.inches)
+	output += gen_output_data_line("left_margin", section.left_margin.inches)
+	output += gen_output_data_line("right_margin", section.right_margin.inches)
+	output += gen_output_data_line("top_margin", section.top_margin.inches)
+	output += gen_output_data_line("bottom_margin", section.bottom_margin.inches)
 
 	vertical_tablespace = Length(section.page_height - section.top_margin - section.bottom_margin).inches
 
 
 
 for table in document.tables:
-	output += gen_output_line("column_count", len(table.columns))
-	output += gen_output_line("row_count", len(table.rows))
+	output += gen_output_data_line("column_count", len(table.columns))
+	output += gen_output_data_line("row_count", len(table.rows))
 	# print(table.autofit)
 	first_row = table.row_cells(0)
 	col_widths = [cell.width.inches for cell in first_row]
 
-	output += gen_output_line("col_spacing", min(col_widths))
-	output += gen_output_line("label_width", max(col_widths))
+	output += gen_output_data_line("col_spacing", min(col_widths))
+	output += gen_output_data_line("label_width", max(col_widths))
 
-
-	output += gen_output_line("label_height_estimate", vertical_tablespace/len(table.rows))
 
 	# calculate cell height, cuz i guess thats not a thing
 	
@@ -79,5 +83,6 @@ for table in document.tables:
 # 			print("This document seems to contain VBA macros.")
 # 	# meta = ole.get_metadata()
 # 	# meta.dump()
+	output += gen_output_data_line("label_height_estimate", vertical_tablespace/len(table.rows))
 
 print(output)
