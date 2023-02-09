@@ -6,6 +6,8 @@ import argparse
 parser = argparse.ArgumentParser(description='extract template information from a word template')
 parser.add_argument('filename',
                     help='the filename of the word doc template')
+parser.add_argument('--output',
+                    help='the filename to write the output data to (optional)')
 args = parser.parse_args()
 
 
@@ -85,4 +87,9 @@ for table in document.tables:
 # 	# meta.dump()
 	output += gen_output_data_line("label_height_estimate", vertical_tablespace/len(table.rows))
 
-print(output)
+
+if args.output:
+	with open(args.output, "w") as outfile:
+		outfile.writelines(output.split("\n"))
+else:
+	print(output)
